@@ -32,6 +32,7 @@ export class StatEngine {
       id: params.id,
       timestamp: params.timstamp || moment.utc().format(),
       firecaresId: params.firecaresId,
+      sourceFile: params.sourceFile,
       msgType: 'FIRE_INCIDENT',
       action: 'UPSERT',
       payload: params.payload,
