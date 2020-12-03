@@ -1,11 +1,11 @@
-const async = require('async');
-const request = require('requestretry');
-const moment = require('moment');
-const zlib = require('zlib');
-const aws4 = require('aws4');
-const _ = require('lodash');
+import async from 'async';
+import request from 'requestretry';
+import moment from 'moment';
+import zlib from 'zlib';
+import aws4 from 'aws4';
+import _ from 'lodash';
 
-class StatEngine {
+export default class StatEngine {
   constructor(options) {
     const defaultOptions = {
       protocol: 'https',
@@ -81,5 +81,3 @@ class StatEngine {
     });
   }
 }
-
-module.exports = StatEngine;

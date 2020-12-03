@@ -1,7 +1,7 @@
-const { expect } = require('chai');
-const nock = require('nock');
-const StatEngine = require('../src/index');
+import { expect } from 'chai';
+import nock from 'nock';
 
+import StatEngine from '../src';
 
 describe('API', () => {
   describe('Constructor', () => {
