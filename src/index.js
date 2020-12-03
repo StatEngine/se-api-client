@@ -5,7 +5,7 @@ import zlib from 'zlib';
 import aws4 from 'aws4';
 import _ from 'lodash';
 
-export class StatEngine {
+export default class StatEngine {
   constructor(options) {
     const defaultOptions = {
       protocol: 'https',
@@ -30,7 +30,7 @@ export class StatEngine {
 
     const incident = {
       id: params.id,
-      timestamp: params.timstamp || moment.utc().format(),
+      timestamp: params.timestamp || moment.utc().format(),
       firecaresId: params.firecaresId,
       sourceFile: params.sourceFile,
       msgType: 'FIRE_INCIDENT',
@@ -81,5 +81,3 @@ export class StatEngine {
     });
   }
 }
-
-export default { StatEngine };
