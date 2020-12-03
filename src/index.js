@@ -30,7 +30,7 @@ export default class StatEngine {
 
     const incident = {
       id: params.id,
-      timestamp: params.timstamp || moment.utc().format(),
+      timestamp: params.timestamp || moment.utc().format(),
       firecaresId: params.firecaresId,
       sourceFile: params.sourceFile,
       msgType: 'FIRE_INCIDENT',
