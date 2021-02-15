@@ -35,16 +35,18 @@ export default class StatEngine {
       sourceFile: params.sourceFile,
       msgType: 'FIRE_INCIDENT',
       action: 'UPSERT',
-      payload: params.payload,
     };
     let body;
 
     return async.series([
-      compressCb => zlib.deflate(JSON.stringify(incident), (err, buffer) => {
+      (compressCb) => zlib.gzip(params.payload, (err, buffer) => {
         if (err) {
           return compressCb(err);
         }
-        body = buffer;
+
+        incident.compressedPayload = buffer.toString('base64');
+        body = JSON.stringify(incident);
+
         return compressCb();
       }),
       (postCb) => {
@@ -55,7 +57,6 @@ export default class StatEngine {
           url: `${this.options.baseUrl}/fire-departments/${incident.firecaresId}/fire-incidents/`,
           method: 'POST',
           headers: {
-            'Content-Encoding': 'deflate',
             'Content-Type': 'application/json',
           },
           body,
@@ -69,7 +70,9 @@ export default class StatEngine {
         request(req, (err, response) => {
           if (err) {
             return postCb(err);
-          } else if (response.statusCode !== 204) {
+          }
+
+          if (response.statusCode !== 204) {
             return postCb(new Error(`Unexpected response: ${response.statusCode}`));
           }
 

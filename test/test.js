@@ -1,3 +1,4 @@
+import * as zlib from 'zlib';
 import { expect } from 'chai';
 import nock from 'nock';
 
@@ -47,6 +48,35 @@ describe('API', () => {
       });
     });
 
+    it('should compress payload', (done) => {
+      const se = new StatEngine();
+      const payload = JSON.stringify({
+        id: 10,
+        firecaresId: 'test',
+        msg: 'this is a message',
+      });
+
+      nock('https://api.statengine.io')
+        .post('/v1/fire-departments/1234/fire-incidents/')
+        .reply((uri, body, cb) => {
+          zlib.gunzip(Buffer.from(body.compressedPayload, 'base64'), (err, res) => {
+            if (err) cb(err, [500, err]);
+
+            expect(res.toString()).to.equal(payload);
+
+            cb(null, [204, '']);
+          });
+        });
+
+      se.ingest({
+        id: 'testId',
+        firecaresId: '1234',
+        payload,
+      }, (err) => {
+        expect(err).to.be.null;
+        done();
+      });
+    });
 
     it('should ingest a payload', (done) => {
       const se = new StatEngine();
