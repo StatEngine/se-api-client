@@ -69,6 +69,8 @@ export default class StatEngine {
 
         request(req, (err, response) => {
           if (err) {
+            // eslint-disable-next-line no-console
+            console.error(err);
             return postCb(err);
           }
 
