@@ -4,7 +4,7 @@ import zlib from 'zlib';
 import sizeof from 'object-sizeof';
 import nock from 'nock';
 
-import StatEngine from '../src';
+import { StatEngine } from '../src';
 
 describe('API', () => {
   describe('payload', () => {
