@@ -5,7 +5,7 @@ import zlib from 'zlib';
 import aws4 from 'aws4';
 import _ from 'lodash';
 
-export default class StatEngine {
+export class StatEngine {
   constructor(options) {
     const defaultOptions = {
       protocol: 'https',

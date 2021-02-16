@@ -2,7 +2,7 @@ import * as zlib from 'zlib';
 import { expect } from 'chai';
 import nock from 'nock';
 
-import StatEngine from '../src';
+import { StatEngine } from '../src';
 
 describe('API', () => {
   describe('Constructor', () => {
