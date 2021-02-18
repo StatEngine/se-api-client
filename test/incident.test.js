@@ -102,4 +102,20 @@ describe('API', () => {
       });
     });
   });
+
+  describe('incidentBody()', () => {
+    const se = new StatEngine();
+    it('id with numbers should be a string', () => {
+      expect(se.incidentBody({ id: 1234567890 }).id).to.equal('1234567890');
+    });
+    it('id should not have whitespace', () => {
+      expect(se.incidentBody({ id: 'id with whitespace ' }).id).to.equal('id with whitespace');
+    });
+    it('sourceFile should be a string', () => {
+      expect(se.incidentBody({ sourceFile: 1234567890 }).sourceFile).to.equal('1234567890');
+    });
+    it('sourceFile should not have whitespace', () => {
+      expect(se.incidentBody({ sourceFile: 'sourceFile with whitespace ' }).sourceFile).to.equal('sourceFile with whitespace');
+    });
+  });
 });
