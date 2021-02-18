@@ -5,6 +5,8 @@ import zlib from 'zlib';
 import aws4 from 'aws4';
 import _ from 'lodash';
 
+// fixing this lint issue would cause problems where this class is imported, don't fix
+// eslint-disable-next-line import/prefer-default-export
 export class StatEngine {
   constructor(options) {
     const defaultOptions = {
@@ -28,14 +30,8 @@ export class StatEngine {
     if (_.isUndefined(params.firecaresId)) return cb(new Error('firecaresId is required'));
     if (_.isUndefined(params.payload)) return cb(new Error('payload is required'));
 
-    const incident = {
-      id: params.id,
-      timestamp: params.timestamp || moment.utc().format(),
-      firecaresId: params.firecaresId,
-      sourceFile: params.sourceFile,
-      msgType: 'FIRE_INCIDENT',
-      action: 'UPSERT',
-    };
+    const incident = this.incidentBody(params);
+
     let body;
 
     return async.series([
@@ -84,5 +80,17 @@ export class StatEngine {
     ], (err) => {
       cb(err);
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  incidentBody(params) {
+    return {
+      id: String(params.id).trim(),
+      timestamp: params.timestamp || moment.utc().format(),
+      firecaresId: params.firecaresId,
+      sourceFile: String(params.sourceFile).trim(),
+      msgType: 'FIRE_INCIDENT',
+      action: 'UPSERT',
+    };
   }
 }
