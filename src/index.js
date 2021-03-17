@@ -73,11 +73,12 @@ export class StatEngine {
           if (response.statusCode !== 204) {
             return postCb(new Error(`Unexpected response: ${response.statusCode}`));
           }
-
           return postCb();
         });
       },
     ], (err) => {
+      /* eslint-disable-next-line no-console */
+      console.error(err);
       cb(err);
     });
   }
